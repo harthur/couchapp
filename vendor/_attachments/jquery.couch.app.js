@@ -33,13 +33,11 @@
   $.couch.app = $.couch.app || function(appFun, opts) {
     opts = opts || {};
     $(function() {
-      var urlPrefix = opts.urlPrefix || "";
+      var parts = /(.*)\/(.+)\/_design\/([^\/]+)/.exec(document.location.pathname);
+      var dbname = opts.db || parts[2];
+      var dname = opts.design || parts[3];
+      var urlPrefix = opts.urlPrefix || parts[1];
       $.couch.urlPrefix = urlPrefix;
-
-      var index = urlPrefix.split('/').length;
-      var fragments = unescape(document.location.href).split('/');
-      var dbname = opts.db || fragments[index + 2];
-      var dname = opts.design || fragments[index + 4];
 
       var db = $.couch.db(dbname);
       var design = new Design(db, dname);
