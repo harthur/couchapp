@@ -34,10 +34,9 @@
     opts = opts || {};
     $(function() {
       var parts = /(.*)\/(.+)\/_design\/([^\/]+)/.exec(document.location.pathname);
+      $.couch.urlPrefix = opts.urlPrefix || parts[1];
       var dbname = opts.db || parts[2];
       var dname = opts.design || parts[3];
-      var urlPrefix = opts.urlPrefix || parts[1];
-      $.couch.urlPrefix = urlPrefix;
 
       var db = $.couch.db(dbname);
       var design = new Design(db, dname);
